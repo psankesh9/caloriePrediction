@@ -76,21 +76,30 @@
         <section id="final-model">
             <h2>Final Model</h2>
             <p>
-                The Final Model marks a paradigm shift from the baseline, employing a sophisticated RandomForestRegressor. This model embodies a synergy of meticulously engineered features and hyperparameter optimization. It intricately balances the simplicity of numerical data with the nuanced complexity of textual information, unveiling patterns through TF-IDF vectorization of ingredients and cooking steps.
+                <strong>Feature Engineering:</strong> Beyond the baseline's preparation time and ingredient count, the Final Model integrates TF-IDF vectorization of ingredient lists and preparation steps. This technique was chosen to capture the unique vocabulary of cooking methods and ingredients, which are often predictors of a recipe's caloric content due to their nutritional profiles. Standardizing the numerical features ensures comparability across recipes of varying scales and complexities, allowing for a nuanced understanding of how each factor contributes to the overall caloric outcome.
             </p>
             <p>
-                A methodical GridSearchCV process illuminated the path to excellence by discovering the optimal hyperparameters. The 'n_estimators' and 'max_depth' were explored, revealing that a model with 70 estimators and unrestricted depth was ideal for our dataset, significantly enhancing the model's ability to capture subtle culinary nuances.
+                <strong>Modeling Algorithm and Hyperparameter Tuning:</strong> The RandomForestRegressor was selected for its ability to handle the non-linearities and interactions between features inherent in complex datasets. To identify the best-performing hyperparameters, a GridSearchCV was implemented, considering various numbers of estimators and tree depths. The process converged on 70 trees and unlimited depth, which suggests that the model required a substantial ensemble of decision trees to capture the intricate patterns of the data. The unrestricted depth allowed the model to learn finer details from the dataset without overfitting, as evidenced by the validation scores.
             </p>
             <p>
-                This tailored approach led to an RMSE of 299.96, a testament to the model's evolved prediction accuracy, which now stands more aligned with the complex reality of culinary analytics. The graphics below encapsulate our model's enhanced precision, illustrating a closer adherence to actual values, a more focused prediction distribution, and a reduction in residuals' variance.
+                <strong>Performance Improvement:</strong> The Final Model's RMSE of 299.96 represents a marked advancement from the Baseline Model's RMSE of 583.21, indicating a more nuanced and accurate calibration of the model to the data. This improvement underscores the effectiveness of the additional features and the RandomForestRegressor's complex decision-making process in capturing the relationships within the data that directly influence calorie estimations.
             </p>
-            <img src="actual_vs_predicted.png" alt="Actual vs. Predicted Calories" width="100%">
-            <p><em>Figure 1: Actual vs. Predicted Calories - The proximity of data points to the line of perfect prediction underscores the model's accuracy.</em></p>
-            <img src="predicted_distribution.png" alt="Distribution of Predicted Calories" width="100%">
-            <p><em>Figure 2: Distribution of Predicted Calories - The bell-shaped curve indicates a precise calibration of the model's predictive distribution.</em></p>
-            <img src="residuals_plot.png" alt="Residuals vs. Predicted" width="100%">
-            <p><em>Figure 3: Residuals vs. Predicted - The concentration of residuals near zero reflects the model's consistency and reliability.</em></p>
+            <p><strong>Visualizations:</strong> The figures below provide a visual interpretation of the model's refined performance:</p>
+            <figure>
+                <img src="actual_vs_predicted.png" alt="Actual vs. Predicted Calories" width="100%">
+                <figcaption>Figure 1: Actual vs. Predicted Calories - A closer clustering of points around the line of equality indicates enhanced prediction accuracy.</figcaption>
+            </figure>
+            <figure>
+                <img src="predicted_distribution.png" alt="Distribution of Predicted Calories" width="100%">
+                <figcaption>Figure 2: Distribution of Predicted Calories - The distribution closely mirrors the expected bell curve, suggesting a well-calibrated model.</figcaption>
+            </figure>
+            <figure>
+                <img src="residuals_plot.png" alt="Residuals vs. Predicted" width="100%">
+                <figcaption>Figure 3: Residuals vs. Predicted - Residuals predominantly cluster around zero, implying consistent model reliability across the range of predictions.</figcaption>
+            </figure>
         </section>
+        
+        
         
 
       
