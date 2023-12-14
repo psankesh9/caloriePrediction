@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 5: Recipe Calorie Prediction</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; background-color: #f4f4f4; color: #333333; }
+        .container { width: 80%; margin: auto; overflow: hidden; }
+        header { background: #003366; color: #FFD700; padding-top: 30px; min-height: 70px; border-bottom: #FFD700 3px solid; }
+        header h1 { margin: 0; }
+        section { margin-top: 20px; }
+        footer { background: #003366; color: #FFD700; text-align: center; padding: 10px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Project 5: Recipe Calorie Prediction</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="problem-identification">
+            <h2>Problem Identification</h2>
+            <p><strong>Prediction Problem:</strong> The objective is to develop a predictive model for estimating the calorie content in various recipes. This task is crucial for nutritional analysis and dietary planning, helping individuals and professionals to gauge the caloric impact of meals effectively.</p>
+            <p><strong>Problem Type:</strong> We are tackling a regression problem, aiming to predict a continuous quantity - the calorie content of recipes. Regression is the appropriate approach for this type of prediction, where the outcome is a continuous variable.</p>
+            <p><strong>Response Variable:</strong> The chosen target variable is 'Calories', which represents the total caloric value of a recipe. This variable was selected due to its significant role in dietary considerations, both for individuals focusing on nutritional intake and for culinary experts aiming to balance meal composition.</p>
+            <p><strong>Evaluation Metrics:</strong> To assess the model's performance, we use Mean Squared Error (MSE) and Root Mean Squared Error (RMSE):
+                <ul>
+                    <li><strong>MSE:</strong> This metric calculates the average of the squared differences between the predicted and actual values. By squaring the errors, MSE gives more weight to larger errors, thus highlighting significant discrepancies in predictions. It is particularly useful in situations where we want to penalize large errors more than smaller ones.</li>
+                    <li><strong>RMSE:</strong> RMSE is the square root of MSE. It is expressed in the same units as the predicted variable (calories), making it more intuitive and easier to interpret. RMSE provides a clear indication of the model's accuracy in predicting the calorie content, with a lower value indicating better performance.</li>
+                </ul>
+            </p>
+            <p><strong>Time of Prediction Consideration:</strong> In our model, we carefully selected features that would be known at the time of prediction to ensure the model's predictions are practical and applicable in real-world scenarios. This includes features like preparation time and number of ingredients, which are known prior to knowing the actual calorie content.</p>
+        </section>
+    </div>
+    <section id="data-preview">
+        <h2>Data Preview</h2>
+        <p>The table below shows the first few rows of the cleaned dataset:</p>
+        <!-- Embedding the DataFrame HTML table using an iframe -->
+        <iframe src="data_table.html" style="width:100%; height:400px;"></iframe>
+
+    </section>
+
+        
+        <div>
+    
+        
+            <section id="mathematical-explanation">
+                <h2>Mathematical Explanation</h2>
+                <p>The Mean Squared Error (MSE) is calculated as:</p>
+                <p>\( \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \)</p>
+                <p>where:</p>
+                <ul>
+                    <li>\( n \) is the number of observations in the test set,</li>
+                    <li>\( y_i \) is the actual value of calories for observation \( i \),</li>
+                    <li>\( \hat{y}_i \) is the predicted value of calories for observation \( i \).</li>
+                </ul>
+                <p>The Root Mean Squared Error (RMSE) is the square root of MSE:</p>
+                <p>\( \text{RMSE} = \sqrt{\text{MSE}} \)</p>
+            </section>
+            
+        <section id="baseline-model">
+            <h2>Baseline Model</h2>
+            <p><strong>Model Overview:</strong> The Baseline Model is a Linear Regression, chosen for its simplicity and clarity. It serves as an initial benchmark for understanding fundamental relationships in predicting calorie content from recipes.</p>
+            <p><strong>Features in the Model:</strong> The model utilizes two quantitative features - 'minutes' (preparation time) and 'n_ingredients' (number of ingredients). Both features are used in their raw, untransformed state to maintain transparency and interpretability.</p>
+            <p><strong>Model Performance:</strong> Evaluated using Mean Squared Error (MSE) and Root Mean Squared Error (RMSE), the model showed an MSE of 340,138.82 and an RMSE of 583.21. This level of RMSE suggests that the model captures some basic patterns in the data, but there is significant room for improvement.</p>
+            <p><strong>Additional Considerations:</strong> Care was taken to ensure that only features known prior to the actual knowledge of calorie content were included. The model's performance was tested on unseen data to assess its real-world applicability and generalization capabilities.</p>
+            <p><strong>Conclusion:</strong> While providing valuable initial insights, the Baseline Model's performance indicates substantial potential for further enhancements through advanced feature engineering and exploration of more complex models.</p>
+            <iframe src="Baseline_Model_Performance.html" width="100%" height="400"></iframe>
+
+            <div id="plot-baseline-model"></div>
+        </section>
+        <section id="final-model">
+            <h2>Final Model</h2>
+            <p>
+                The Final Model marks a paradigm shift from the baseline, employing a sophisticated RandomForestRegressor. This model embodies a synergy of meticulously engineered features and hyperparameter optimization. It intricately balances the simplicity of numerical data with the nuanced complexity of textual information, unveiling patterns through TF-IDF vectorization of ingredients and cooking steps.
+            </p>
+            <p>
+                A methodical GridSearchCV process illuminated the path to excellence by discovering the optimal hyperparameters. The 'n_estimators' and 'max_depth' were explored, revealing that a model with 70 estimators and unrestricted depth was ideal for our dataset, significantly enhancing the model's ability to capture subtle culinary nuances.
+            </p>
+            <p>
+                This tailored approach led to an RMSE of 299.96, a testament to the model's evolved prediction accuracy, which now stands more aligned with the complex reality of culinary analytics. The graphics below encapsulate our model's enhanced precision, illustrating a closer adherence to actual values, a more focused prediction distribution, and a reduction in residuals' variance.
+            </p>
+            <img src="actual_vs_predicted.png" alt="Actual vs. Predicted Calories" width="100%">
+            <p><em>Figure 1: Actual vs. Predicted Calories - The proximity of data points to the line of perfect prediction underscores the model's accuracy.</em></p>
+            <img src="predicted_distribution.png" alt="Distribution of Predicted Calories" width="100%">
+            <p><em>Figure 2: Distribution of Predicted Calories - The bell-shaped curve indicates a precise calibration of the model's predictive distribution.</em></p>
+            <img src="residuals_plot.png" alt="Residuals vs. Predicted" width="100%">
+            <p><em>Figure 3: Residuals vs. Predicted - The concentration of residuals near zero reflects the model's consistency and reliability.</em></p>
+        </section>
+        
+
+      
+        <section id="fairness-analysis">
+            <h2>Fairness Analysis</h2>
+            <p>
+                In our quest to ascertain the equitability of our Final Model, we performed an exhaustive fairness analysis. We selected two distinct groups based on recipe complexity—labeling them 'Simple' for recipes with steps below the median and 'Complex' for those above—to scrutinize if the model's accuracy was consistent irrespective of complexity. We employed the Root Mean Squared Error (RMSE) as our metric to capture the model's precision across these groups.
+            </p>
+            <p>
+                We articulated our null hypothesis to posit that the model's predictive accuracy is equitable across both simple and complex recipes, suggesting that any observed disparities could arise from random variations rather than systematic bias. Conversely, our alternative hypothesis contended that our model's performance would significantly differ between the two groups, indicating potential unfairness.
+            </p>
+            <p>
+                The permutation test, involving 100 resampling iterations, was meticulously executed without altering the model's state, thus ensuring the integrity of the results. The p-value, calculated as the proportion of permuted datasets yielding a difference in RMSE at least as extreme as the observed, stood at a stark 1.0. This high p-value signals that our observed RMSE disparity is likely attributable to chance, lending strong support to our null hypothesis and indicating no evidence of unfairness in the model's performance between simple and complex recipes.
+            </p>
+            <p>
+                The implications are far-reaching, as they suggest our model can be deployed with confidence that it does not disproportionately favor or penalize recipes based on their complexity. This is crucial for stakeholders who rely on our model for dietary planning, nutritional analysis, and culinary innovation, ensuring equitable performance across a diverse recipe spectrum.
+            </p>
+            <p>
+                While the p-value suggests fairness, it is essential to acknowledge the limitations of statistical tests and to continue to monitor the model's deployment to ensure ongoing fairness. We are committed to maintaining transparency and vigilance in our model's application to uphold the trust of our users.
+            </p>
+        </section>
+
+    <footer>
+        <p>Project 5: DSC80 - Recipe Calorie Prediction</p>
+    </footer>
+</body>
+</html>
